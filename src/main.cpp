@@ -32,6 +32,7 @@ int main() {
     const int image_height = 100;
     const int samples_per_pixel = 100;
     const int max_depth = 50;
+	const auto aspect_ratio = double(image_width) / image_height;
 
     std::cout << "P3\n" << image_width << " " << image_height << "\n255\n";
 
@@ -43,7 +44,13 @@ int main() {
 	world.add(make_shared<sphere>(vec3(1,0,-1), 0.5, make_shared<metal>(vec3(0.8, 0.6, 0.2), 0.3)));
 	world.add(make_shared<sphere>(vec3(-1,0,-1), 0.5, make_shared<dielectric>(1.5)));
 	world.add(make_shared<sphere>(vec3(-1,0,-1), -0.45, make_shared<dielectric>(1.5)));
-    camera cam;
+	// auto R = cos(pi/4);
+	// hittable_list world;
+	// world.add(make_shared<sphere>(vec3(-R,0,-1), R, make_shared<lambertian>(vec3(0, 0, 1))));
+	// world.add(make_shared<sphere>(vec3( R,0,-1), R, make_shared<lambertian>(vec3(1, 0, 0))));
+    // camera cam(120, double(image_width)/image_height);
+	vec3 vup(0, 1, 0);
+	camera cam(vec3(-2,2,1), vec3(0,0,-1), vup, 40, aspect_ratio);
     for (int j = image_height-1; j >= 0; --j) {
         std::cerr << "\rScanlines remaining: " << j << ' ' << std::flush;
         for (int i = 0; i < image_width; ++i) {
